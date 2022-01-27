@@ -8,17 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.core.Context;
-
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 {
 
-    Context context;
+    HomeFragment context;
     ArrayList<User> userArrayList;
 
-    public MyAdapter(Context context, ArrayList<User> userArrayList) {
+    public MyAdapter(HomeFragment context, ArrayList<User> userArrayList) {
         this.context = context;
         this.userArrayList = userArrayList;
     }
@@ -34,6 +32,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
 
+        User user = userArrayList.get(position);
+
+        holder.fname.setText(user.first_Name);
+        holder.lname.setText(user.last_Name);
     }
 
     @Override
@@ -43,13 +45,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 
     public static class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView name,age,city;
+        TextView fname,lname;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
-            age = itemView.findViewById(R.id.age);
-            city = itemView.findViewById(R.id.city);
+            fname = itemView.findViewById(R.id.fname);
+            lname = itemView.findViewById(R.id.lname);
+
 
         }
     }
