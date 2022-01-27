@@ -16,7 +16,7 @@ public class User {
     }
 
     public String getFirst_Name() {
-        return first_Name;
+        return null;
     }
 
     public void setFirst_Name(String first_Name) {
