@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -47,6 +48,7 @@ public class HomeFragment extends Fragment
         userArrayList = new ArrayList<>();
         myAdapter = new MyAdapter(HomeFragment.this,userArrayList);
 
+
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading");
@@ -62,6 +64,7 @@ public class HomeFragment extends Fragment
     @SuppressLint("NotifyDataSetChanged")
     private void EventchangeListerner()
     {
+
 
         fstore.collection("Nanny data").orderBy("years_of_experience", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {

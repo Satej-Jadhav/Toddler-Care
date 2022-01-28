@@ -1,11 +1,14 @@
 package com.care.toddlercare;
 
+import android.content.Intent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -36,6 +39,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 
         holder.fname.setText(user.first_Name);
         holder.lname.setText(user.last_Name);
+
+        holder.fname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                /*AppCompatActivity activity = (AppCompatActivity)view.getContext();
+                activity.getFragmentManager().beginTransaction().replace(context.parent.getContext(),new Nanny_Info_fragment()).addToBackStack(null).commit();*/
+
+                /*Bundle bundle = new Bundle();
+                Nanny_Info_fragment fragment = new Nanny_Info_fragment();
+                fragment.setArguments(bundle);*/
+
+            }
+        });
     }
 
     @Override
