@@ -46,6 +46,12 @@ public class Profile extends Fragment
         mAuth = FirebaseAuth.getInstance();
         logout.setOnClickListener(view1 -> {
             mAuth.signOut();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
+
+        // Inflate the layout for th
             Intent intent = new Intent(getActivity(),MainActivity.class);
             startActivity(intent);
         });
