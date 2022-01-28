@@ -1,6 +1,7 @@
 package com.care.toddlercare;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,16 +24,11 @@ public class HomeFragment extends Fragment
     ArrayList<User> userArrayList;
     MyAdapter myAdapter;
     FirebaseFirestore fstore;
-    //ProgressDialog progressDialog;
+    ProgressDialog progressDialog;
 
     public HomeFragment()
     {
-
         // Required empty public constructor
-       /* progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading");
-        progressDialog.show();*/
     }
 
 
@@ -51,6 +47,11 @@ public class HomeFragment extends Fragment
         userArrayList = new ArrayList<>();
         myAdapter = new MyAdapter(HomeFragment.this,userArrayList);
 
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
+
         recyclerView.setAdapter(myAdapter);
         EventchangeListerner();
 
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment
     @SuppressLint("NotifyDataSetChanged")
     private void EventchangeListerner()
     {
+
         fstore.collection("Nanny data").orderBy("years_of_experience", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
                     if (error != null)
@@ -74,6 +76,7 @@ public class HomeFragment extends Fragment
                         if (dc.getType() == DocumentChange.Type.ADDED)
                         {
                             userArrayList.add(dc.getDocument().toObject(User.class));
+                            progressDialog.dismiss();
                         }
                         myAdapter.notifyDataSetChanged();
                     }
