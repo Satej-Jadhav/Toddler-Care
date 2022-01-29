@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.type.Fraction;
 
 import java.util.ArrayList;
 
@@ -44,9 +47,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
             @Override
             public void onClick(View view)
             {
-                /*AppCompatActivity activity = (AppCompatActivity)view.getContext();
-                activity.getFragmentManager().beginTransaction().replace(context.parent.getContext(),new Nanny_Info_fragment()).addToBackStack(null).commit();*/
-
                 /*Bundle bundle = new Bundle();
                 Nanny_Info_fragment fragment = new Nanny_Info_fragment();
                 fragment.setArguments(bundle);*/

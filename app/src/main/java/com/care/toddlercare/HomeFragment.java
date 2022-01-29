@@ -8,16 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.okhttp.internal.DiskLruCache;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment
 {
@@ -65,9 +71,29 @@ public class HomeFragment extends Fragment
     private void EventchangeListerner()
     {
 
+        Query query = fstore
+                .collection("Nanny date")
+                .orderBy("years_of_experience", Query.Direction.DESCENDING);
 
-        fstore.collection("Nanny data").orderBy("years_of_experience", Query.Direction.DESCENDING)
-                .addSnapshotListener((value, error) -> {
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
+            {
+                if (error != null) {
+                    // Handle error
+                    //...
+                    return;
+                }
+
+                // Convert query snapshot to a list of chats
+                //List<User> chats = snapshot.toObjects(User.class);
+
+                // Update UI
+                // ...
+
+            }
+        });
+                /*.addSnapshotListener((value, error) -> {
                     if (error != null)
                     {
                         Log.e("Firestore error",error.getMessage());
@@ -84,7 +110,7 @@ public class HomeFragment extends Fragment
                         myAdapter.notifyDataSetChanged();
                     }
 
-                });
+                });*/
     }
 
 }
