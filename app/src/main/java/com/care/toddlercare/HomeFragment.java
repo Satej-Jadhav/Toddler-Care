@@ -2,14 +2,17 @@ package com.care.toddlercare;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +36,7 @@ public class HomeFragment extends Fragment
     FirebaseFirestore fstore;
     ProgressDialog progressDialog;
 
+
     public HomeFragment()
     {
         // Required empty public constructor
@@ -46,7 +50,6 @@ public class HomeFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -57,7 +60,7 @@ public class HomeFragment extends Fragment
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading");
+        progressDialog.setMessage("Loading data");
         progressDialog.show();
 
         recyclerView.setAdapter(myAdapter);
@@ -70,33 +73,14 @@ public class HomeFragment extends Fragment
     @SuppressLint("NotifyDataSetChanged")
     private void EventchangeListerner()
     {
-
-        Query query = fstore
-                .collection("Nanny date")
-                .orderBy("years_of_experience", Query.Direction.DESCENDING);
-
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fstore.collection("Nanny data").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
             {
-                if (error != null) {
-                    // Handle error
-                    //...
-                    return;
-                }
-
-                // Convert query snapshot to a list of chats
-                //List<User> chats = snapshot.toObjects(User.class);
-
-                // Update UI
-                // ...
-
-            }
-        });
-                /*.addSnapshotListener((value, error) -> {
                     if (error != null)
                     {
-                        Log.e("Firestore error",error.getMessage());
+                        System.out.println("Firestore error" + error.getMessage());
+                        progressDialog.dismiss();
                         return;
                     }
 
@@ -110,7 +94,8 @@ public class HomeFragment extends Fragment
                         myAdapter.notifyDataSetChanged();
                     }
 
-                });*/
-    }
+                }
+        });
 
+    }
 }

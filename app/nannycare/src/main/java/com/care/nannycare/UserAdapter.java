@@ -1,9 +1,8 @@
-package com.care.toddlercare;
+package com.care.nannycare;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +18,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>
 {
     HomeFragment context;
     ArrayList<User> userArrayList;
+    ArrayList<Nanny> nannyArrayList;
     FirebaseFirestore fstore;
     ProgressDialog progressDialog;
     FirebaseAuth mAuth;
 
-    public MyAdapter(HomeFragment context, ArrayList<User> userArrayList) {
+    public UserAdapter(HomeFragment context, ArrayList<User> userArrayList) {
         this.context = context;
         this.userArrayList = userArrayList;
         this.fstore = FirebaseFirestore.getInstance();
@@ -36,35 +36,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 
     @NonNull
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position)
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         User user = userArrayList.get(position);
-        holder.fname.setText(user.first_Name);
-        holder.lname.setText(user.last_Name);
+        holder.full_name.setText(user.getFull_name());
+        holder.date.setText(user.getDate());
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                DocumentReference df = fstore.collection("Nanny data").document(user.getUserid());
+                DocumentReference df = fstore.collection("Nanny data").document(mAuth.getCurrentUser().getUid())
+                        .collection("Date").document(user.getUser_id());
                 Intent intent;
-                intent = new Intent(view.getContext(), Nanny_Info.class);
+                intent = new Intent(view.getContext(), Parent_Info.class);
 
 
-                intent.putExtra("user_Id", user.getUserid());
-                intent.putExtra("first_name",user.getFirst_Name());
-                intent.putExtra("about",user.getAbout());
+                intent.putExtra("user_Id", user.getUser_id());
+                intent.putExtra("full_name",user.getFull_name());
+                intent.putExtra("job_description",user.getJob_description());
                 intent.putExtra("email",user.getEmail());
-                intent.putExtra("year_experience",user.getYears_of_experience());
-                intent.putExtra("phone_number",user.getPhone_Number());
+                intent.putExtra("date",user.getDate());
+                intent.putExtra("number",user.getNumber());
+
 
                 //Toast.makeText(view.getContext()," "+user.getUserid(),Toast.LENGTH_LONG).show();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -81,13 +83,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 
     public static class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView fname,lname;
+        TextView full_name, date;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            fname = itemView.findViewById(R.id.fname);
-            lname = itemView.findViewById(R.id.lname);
+            full_name = itemView.findViewById(R.id.full_name);
+            date = itemView.findViewById(R.id.date);
 
         }
     }

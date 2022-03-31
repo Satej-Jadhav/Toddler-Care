@@ -1,10 +1,31 @@
 package com.care.toddlercare;
 
 public class User {
-    String first_Name, last_Name, about, years_of_experience;
+    String first_Name, last_Name, about, years_of_experience, userid,email,phone_Number;
     long age;
 
     public User() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone_Number() {
+        return phone_Number;
+    }
+
+    public void setPhone_Number(String phone_Number) {
+        this.phone_Number = phone_Number;
+    }
+
+    public User(String email, String phone_Number) {
+        this.email = email;
+        this.phone_Number = phone_Number;
     }
 
     public User(String first_Name, String last_Name, String about, String years_of_experience, long age) {
@@ -13,6 +34,15 @@ public class User {
         this.about = about;
         this.years_of_experience = years_of_experience;
         this.age = age;
+        this.userid = userid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getFirst_Name() {

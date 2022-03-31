@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,6 +29,7 @@ public class register_activity extends AppCompatActivity
     FirebaseAuth mAuth;
     String user_id;
     FirebaseFirestore firestore;
+    FirebaseDatabase fbd;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +50,7 @@ public class register_activity extends AppCompatActivity
         register = findViewById(R.id.register_nanny);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        fbd = FirebaseDatabase.getInstance();
 
         register.setOnClickListener(view -> createUser());
     }
@@ -77,6 +80,7 @@ public class register_activity extends AppCompatActivity
                 {
                     Toast.makeText(register_activity.this,"User registered successfully",Toast.LENGTH_SHORT).show();
 
+
                     user_id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     DocumentReference documentReference = firestore.collection("Nanny data").document(user_id);
                     Map<String, Object> user = new HashMap<>();
@@ -87,6 +91,7 @@ public class register_activity extends AppCompatActivity
                     user.put("about",nanny_about);
                     user.put("years_of_experience",experience_years);
                     user.put("aadhar_card_number",aadhar_card);
+                    user.put("userid",user_id);
 
                     documentReference.set(user).addOnCompleteListener(task1 -> Log.d("TAG","on Success: "+ user_id));
 

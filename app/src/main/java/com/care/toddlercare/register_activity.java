@@ -28,7 +28,7 @@ public class register_activity extends AppCompatActivity
     Button register;
 
     FirebaseAuth mAuth;
-    String user_id;
+    public String user_id;
     FirebaseFirestore firestore;
     
     @Override
@@ -56,6 +56,7 @@ public class register_activity extends AppCompatActivity
         String full_name = fname.getText().toString();
         String phone_number =  phone.getText().toString();
 
+
         if(TextUtils.isEmpty(emails))
         {
             email.setError("Email Cannot be Empty");
@@ -73,10 +74,12 @@ public class register_activity extends AppCompatActivity
 
                     user_id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     DocumentReference documentReference = firestore.collection("User data").document(user_id);
+
                     Map<String, Object> user = new HashMap<>();
-                    user.put("Full Name",full_name);
-                    user.put("Email",emails);
-                    user.put("Phone Number",phone_number);
+                    user.put("full_name",full_name);
+                    user.put("email",emails);
+                    user.put("phone_number",phone_number);
+                    user.put("user_id",user_id);
                     documentReference.set(user).addOnCompleteListener(task1 -> Log.d("TAG","on Success: "+ user_id));
 
                     startActivity(new Intent(getApplicationContext(), dashboard_activity.class));                }else

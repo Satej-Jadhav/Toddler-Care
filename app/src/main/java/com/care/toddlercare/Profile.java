@@ -79,9 +79,9 @@ public class Profile extends Fragment
 
        df.get().addOnCompleteListener(task -> {
            progressDialog.dismiss();
-           String name = task.getResult().getString("Full Name");
-           String email_add = task.getResult().getString("Email");
-           String phone_number = task.getResult().getString("Phone Number");
+           String name = task.getResult().getString("full_name");
+           String email_add = task.getResult().getString("email");
+           String phone_number = task.getResult().getString("phone_number");
 
 
            fullname.setText(name);

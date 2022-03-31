@@ -38,10 +38,7 @@
             android:textColor="@color/black"
             android:textSize="22sp"
             />
-
-
     </LinearLayout>
-
 
 
 </androidx.cardview.widget.CardView>

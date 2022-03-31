@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.care.toddlercare">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,16 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <activity
-            android:name="com.care.toddlercare.dashboard_activity"
+            android:name=".confirmed_booking"
             android:exported="false" />
         <activity
-            android:name="com.care.toddlercare.register_activity"
+            android:name=".final_Booking"
             android:exported="false" />
         <activity
-            android:name="com.care.toddlercare.login_activity"
+            android:name=".Nanny_Info"
             android:exported="false" />
         <activity
-            android:name="com.care.toddlercare.MainActivity"
+            android:name=".dashboard_activity"
+            android:exported="false" />
+        <activity
+            android:name=".register_activity"
+            android:exported="false" />
+        <activity
+            android:name=".login_activity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
