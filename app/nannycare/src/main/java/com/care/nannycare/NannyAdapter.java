@@ -3,6 +3,7 @@ package com.care.nannycare;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,6 +52,7 @@ public class NannyAdapter extends RecyclerView.Adapter<NannyAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull NannyAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         Nanny user = nannyArrayList.get(position);
+
         user_id = user.getUser_id();
 
         DocumentReference df = fstore.collection("User Data").document(user_id);
@@ -57,17 +60,23 @@ public class NannyAdapter extends RecyclerView.Adapter<NannyAdapter.MyViewHolder
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task)
             {
-                fname = task.getResult().getString("first_Name");
+                fname = task.getResult().getString("full_name");
                 String lname = task.getResult().getString("last_Name");
                 String email_add = task.getResult().getString("email");
                 phone_number = task.getResult().getString("phone_Number");
+                holder.full_name.setText(fname);
+                holder.date.setText(phone_number);
 
 
 
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("error",""+e);
+            }
         });
-        holder.full_name.setText(fname);
-        holder.date.setText(phone_number);
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
